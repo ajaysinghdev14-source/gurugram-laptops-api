@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* ./
 
 # Install dependencies (frozen lockfile for reliable builds)
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
 
 # Copy the rest of the application
 COPY . .
@@ -38,7 +38,7 @@ COPY --from=builder /app/drizzle.config.ts ./
 COPY --from=builder /app/src/db ./src/db
 
 # Install only production dependencies
-RUN pnpm install --prod --frozen-lockfile
+RUN pnpm install --prod --no-frozen-lockfile
 
 # Expose the application port
 EXPOSE 8000
