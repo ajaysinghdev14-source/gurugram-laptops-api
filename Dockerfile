@@ -49,7 +49,7 @@ RUN echo '#!/bin/sh' > /app/start.sh && \
     echo 'echo "Running database migrations..."' >> /app/start.sh && \
     echo 'npx --yes drizzle-kit migrate' >> /app/start.sh && \
     echo 'echo "Starting application..."' >> /app/start.sh && \
-    echo 'node dist/index.js' >> /app/start.sh && \
+    echo 'node dist/server.js' >> /app/start.sh && \
     chmod +x /app/start.sh
 
 # Run the start script
