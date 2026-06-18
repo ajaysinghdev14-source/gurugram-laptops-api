@@ -1,0 +1,546 @@
+{
+  "info": {
+    "name": "SortOut Jobs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000" },
+    { "key": "accessToken", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "verifyToken", "value": "" },
+    { "key": "resetToken", "value": "" },
+    { "key": "googleIdToken", "value": "" },
+    { "key": "cityId", "value": "1" },
+    { "key": "roleId", "value": "1" },
+    { "key": "skillId", "value": "1" },
+    { "key": "jobId", "value": "1" },
+    { "key": "employmentId", "value": "1" },
+    { "key": "educationId", "value": "1" },
+    { "key": "projectId", "value": "1" },
+    { "key": "itSkillId", "value": "1" },
+    { "key": "applicationId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"name\": \"Test User\"\n}" },
+            "url": "{{baseUrl}}/api/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}" },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/auth/me"
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"\"\n}" },
+            "url": "{{baseUrl}}/api/auth/refresh"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/auth/logout"
+          }
+        },
+        {
+          "name": "Request OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"+919876543210\"\n}" },
+            "url": "{{baseUrl}}/api/auth/request-otp"
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"+919876543210\",\n  \"code\": \"123456\"\n}" },
+            "url": "{{baseUrl}}/api/auth/verify-otp"
+          }
+        },
+        {
+          "name": "Google Auth",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"idToken\": \"{{googleIdToken}}\"\n}" },
+            "url": "{{baseUrl}}/api/auth/google"
+          }
+        },
+        {
+          "name": "Link Phone",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"+919876543210\",\n  \"code\": \"123456\"\n}" },
+            "url": "{{baseUrl}}/api/auth/link-phone"
+          }
+        },
+        {
+          "name": "Link Email",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\"\n}" },
+            "url": "{{baseUrl}}/api/auth/link-email"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Master Data",
+      "item": [
+        {
+          "name": "Get Cities",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/master/cities" }
+        },
+        {
+          "name": "Get Localities by City",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/master/cities/{{cityId}}/localities" }
+        },
+        {
+          "name": "Get Roles",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/master/roles" }
+        },
+        {
+          "name": "Get Skills by Role",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/master/roles/{{roleId}}/skills" }
+        }
+      ]
+    },
+    {
+      "name": "Onboarding",
+      "item": [
+        {
+          "name": "Get Onboarding Status",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/onboarding/status/{{userId}}"
+          }
+        },
+        {
+          "name": "Save Profile",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"fullName\": \"Test User\",\n  \"gender\": \"MALE\",\n  \"educationLevel\": \"GRADUATE\",\n  \"hasExperience\": true,\n  \"experienceLevel\": \"YEARS_2\",\n  \"currentSalary\": 600000,\n  \"preferredCityId\": 1,\n  \"preferredLocalityId\": 1,\n  \"whatsappUpdates\": true\n}" },
+            "url": "{{baseUrl}}/api/onboarding/profile/{{userId}}"
+          }
+        },
+        {
+          "name": "Save Preferences",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"preferredRoleId\": 1,\n  \"skillIds\": [1, 2, 3]\n}" },
+            "url": "{{baseUrl}}/api/onboarding/preferences/{{userId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Full Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}"
+          }
+        },
+        {
+          "name": "Update Basic Profile",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"fullName\": \"Updated Name\",\n  \"noticePeriod\": \"1 month\"\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}"
+          }
+        },
+        {
+          "name": "Update Headline",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"headline\": \"Experienced Full Stack Developer\"\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/headline"
+          }
+        },
+        {
+          "name": "Update Summary",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"summary\": \"3+ years of experience building web applications...\"\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/summary"
+          }
+        },
+        {
+          "name": "Get Personal Details",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}/personal-details"
+          }
+        },
+        {
+          "name": "Update Personal Details",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"dateOfBirth\": \"1995-06-15\",\n  \"maritalStatus\": \"SINGLE\",\n  \"address\": \"123 Test Street\",\n  \"pincode\": \"560001\",\n  \"nationality\": \"Indian\"\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/personal-details"
+          }
+        },
+        {
+          "name": "Get Employments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}/employments"
+          }
+        },
+        {
+          "name": "Create Employment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"designation\": \"Senior Developer\",\n  \"company\": \"Test Corp\",\n  \"employmentType\": \"FULL_TIME\",\n  \"isCurrent\": true,\n  \"startDate\": \"2022-01-01\"\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/employments"
+          }
+        },
+        {
+          "name": "Update Employment",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"designation\": \"Lead Developer\",\n  \"company\": \"Test Corp\",\n  \"employmentType\": \"FULL_TIME\"\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/employments/{{employmentId}}"
+          }
+        },
+        {
+          "name": "Delete Employment",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}/employments/{{employmentId}}"
+          }
+        },
+        {
+          "name": "Get Educations",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}/educations"
+          }
+        },
+        {
+          "name": "Create Education",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"degree\": \"B.Tech\",\n  \"specialization\": \"Computer Science\",\n  \"institution\": \"IIT Delhi\",\n  \"passOutYear\": 2020,\n  \"gradeType\": \"CGPA\",\n  \"grade\": \"8.5\"\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/educations"
+          }
+        },
+        {
+          "name": "Update Education",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"degree\": \"M.Tech\",\n  \"specialization\": \"AI/ML\",\n  \"institution\": \"IIT Delhi\",\n  \"passOutYear\": 2022\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/educations/{{educationId}}"
+          }
+        },
+        {
+          "name": "Delete Education",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}/educations/{{educationId}}"
+          }
+        },
+        {
+          "name": "Get Projects",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}/projects"
+          }
+        },
+        {
+          "name": "Create Project",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Job Portal\",\n  \"description\": \"Built a Naukri-like platform\",\n  \"startDate\": \"2024-01-01\",\n  \"isOngoing\": true,\n  \"projectUrl\": \"https://github.com/test/portal\"\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/projects"
+          }
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"SortOut Jobs\",\n  \"description\": \"Awesome job portal\",\n  \"isOngoing\": false,\n  \"endDate\": \"2025-12-31\"\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/projects/{{projectId}}"
+          }
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}/projects/{{projectId}}"
+          }
+        },
+        {
+          "name": "Get IT Skills",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}/it-skills"
+          }
+        },
+        {
+          "name": "Create IT Skill",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"React.js\",\n  \"proficiency\": \"EXPERT\",\n  \"experienceMonths\": 36\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/it-skills"
+          }
+        },
+        {
+          "name": "Update IT Skill",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"React.js\",\n  \"proficiency\": \"EXPERT\",\n  \"experienceMonths\": 42\n}" },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/it-skills/{{itSkillId}}"
+          }
+        },
+        {
+          "name": "Delete IT Skill",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}/it-skills/{{itSkillId}}"
+          }
+        },
+        {
+          "name": "Upload Resume",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "formdata", "formdata": [{ "key": "resume", "type": "file", "src": "" }] },
+            "url": "{{baseUrl}}/api/profile/{{userId}}/resume"
+          }
+        },
+        {
+          "name": "Delete Resume",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/profile/{{userId}}/resume"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Jobs",
+      "item": [
+        {
+          "name": "List Jobs (paginated)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/jobs?page=1&size=10" }
+        },
+        {
+          "name": "Search Jobs",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"keyword\": \"Developer\",\n  \"locationType\": \"REMOTE\"\n}" },
+            "url": "{{baseUrl}}/api/jobs/search"
+          }
+        },
+        {
+          "name": "Job Detail",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/jobs/{{jobId}}?userId={{userId}}" }
+        },
+        {
+          "name": "Recommended Jobs",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/jobs/recommended/{{userId}}?page=1&size=10"
+          }
+        },
+        {
+          "name": "Save Job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/jobs/{{jobId}}/save/{{userId}}"
+          }
+        },
+        {
+          "name": "Unsave Job",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/jobs/{{jobId}}/save/{{userId}}"
+          }
+        },
+        {
+          "name": "Get Saved Jobs",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/jobs/saved/{{userId}}?page=1&size=10"
+          }
+        },
+        {
+          "name": "Get Saved Job IDs",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/jobs/saved/{{userId}}/ids"
+          }
+        },
+        {
+          "name": "Apply to Job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"coverLetter\": \"I am interested in this role.\"\n}" },
+            "url": "{{baseUrl}}/api/jobs/{{jobId}}/apply/{{userId}}"
+          }
+        },
+        {
+          "name": "Get My Applications",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/jobs/applications/{{userId}}"
+          }
+        },
+        {
+          "name": "Get Application Detail",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/jobs/applications/{{userId}}/{{applicationId}}"
+          }
+        },
+        {
+          "name": "Get Applied Job IDs",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/jobs/applied/{{userId}}/ids"
+          }
+        },
+        {
+          "name": "Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/jobs/stats/{{userId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Admin Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/admin/jobs/stats"
+          }
+        },
+        {
+          "name": "Admin List Jobs",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/admin/jobs?page=1&size=10"
+          }
+        },
+        {
+          "name": "Admin Create Job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"New Job\",\n  \"company\": \"Test Corp\",\n  \"description\": \"A great job\",\n  \"cityId\": 1,\n  \"locationType\": \"HYBRID\",\n  \"employmentType\": \"FULL_TIME\",\n  \"salaryMin\": 500000,\n  \"salaryMax\": 1000000,\n  \"experienceMinYears\": 1,\n  \"experienceMaxYears\": 3,\n  \"vacancies\": 2,\n  \"skillIds\": [1, 2, 3]\n}" },
+            "url": "{{baseUrl}}/api/admin/jobs/{{userId}}"
+          }
+        },
+        {
+          "name": "Admin Update Job",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Updated Job Title\",\n  \"company\": \"Test Corp\"\n}" },
+            "url": "{{baseUrl}}/api/admin/jobs/{{jobId}}"
+          }
+        },
+        {
+          "name": "Admin Toggle Job Status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/admin/jobs/{{jobId}}/status?isActive=false"
+          }
+        },
+        {
+          "name": "Admin Delete Job",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/admin/jobs/{{jobId}}"
+          }
+        },
+        {
+          "name": "Admin Update Application Status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": "{{baseUrl}}/api/admin/jobs/applications/{{applicationId}}/status?status=SHORTLISTED"
+          }
+        }
+      ]
+    }
+  ]
+}
