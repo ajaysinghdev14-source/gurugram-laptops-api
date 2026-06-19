@@ -15,23 +15,27 @@ router.post(
 
 router.post('/login', validateRequest(loginSchema), AuthController.loginWithEmailAndPassword);
 
-router.get('/me', requireAuth, async (req, res) => {
-  const userId = res.locals.user.id;
-  const user = await UserRepository.findUserById(userId);
+router.get('/me', requireAuth, async (req, res, next) => {
+  try {
+    const userId = res.locals.user.id;
+    const user = await UserRepository.findUserById(userId);
 
-  if (!user) {
-    return res.status(404).json({ success: false, message: 'User not found' });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    res.json({
+      success: true,
+      message: 'you have accessed the VIP area',
+      userId: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      role: user.role,
+      status: user.status
+    });
+  } catch (error) {
+    next(error);
   }
-
-  res.json({
-    success: true,
-    message: 'you have accessed the VIP area',
-    userId: user.id,
-    fullName: user.fullName,
-    email: user.email,
-    role: user.role,
-    status: user.status
-  });
 });
 
 router.post('/refresh-token', AuthController.refreshToken);
