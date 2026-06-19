@@ -37,8 +37,8 @@ COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/drizzle.config.ts ./
 COPY --from=builder /app/src/db ./src/db
 
-# Install only production dependencies
-RUN pnpm install --prod --no-frozen-lockfile
+# Install dependencies (including devDependencies for drizzle-kit migrations)
+RUN pnpm install --no-frozen-lockfile
 
 # Expose the application port
 EXPOSE 8000
@@ -47,7 +47,7 @@ EXPOSE 8000
 # Using a shell script to ensure drizzle-kit is available
 RUN echo '#!/bin/sh' > /app/start.sh && \
     echo 'echo "Running database migrations..."' >> /app/start.sh && \
-    echo 'npx --yes drizzle-kit migrate' >> /app/start.sh && \
+    echo 'npx drizzle-kit migrate' >> /app/start.sh && \
     echo 'echo "Starting application..."' >> /app/start.sh && \
     echo 'node dist/server.js' >> /app/start.sh && \
     chmod +x /app/start.sh
