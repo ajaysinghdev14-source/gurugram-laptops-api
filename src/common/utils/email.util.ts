@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 export class EmailUtil {
   public static async sendVerificationEmail(to: string, token: string) {
-    const verifyLink = `http://localhost:3000/verify?token=${token}`;
+    const verifyLink = `${env.FRONTEND_URL}/verify?token=${token}`;
 
     await transporter.sendMail({
       from: 'TechReborn <onboarding@resend.dev>', // MUST use this on free tier
@@ -29,7 +29,7 @@ export class EmailUtil {
   }
 
   public static async sendPasswordResetEmail(to: string, token: string) {
-    const resetLink = `http://localhost:3000/reset-password?token=${token}`;
+    const resetLink = `${env.FRONTEND_URL}/reset-password?token=${token}`;
 
     await transporter.sendMail({
       from: 'TechReborn <onboarding@resend.dev>', // MUST use this on free tier

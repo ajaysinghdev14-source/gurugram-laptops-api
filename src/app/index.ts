@@ -19,7 +19,7 @@ export const buildApp = (): Application => {
 
   app.use(
     cors({
-      origin: ['http://localhost:3000'],
+      origin: env.CORS_ORIGIN.split(','),
       credentials: true,
     }),
   );
