@@ -20,7 +20,7 @@ export const buildApp = (): Application => {
 
   app.use(
     cors({
-      origin: env.CORS_ORIGIN.split(','),
+      origin: env.CORS_ORIGIN.split(',').map((o) => o.trim()),
       credentials: true,
     }),
   );
