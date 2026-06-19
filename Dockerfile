@@ -37,8 +37,8 @@ COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/drizzle.config.ts ./
 COPY --from=builder /app/src/db ./src/db
 
-# Install dependencies (including devDependencies for drizzle-kit migrations)
-RUN pnpm install --no-frozen-lockfile
+# Copy node_modules from builder to ensure drizzle-kit (devDependency) is available
+COPY --from=builder /app/node_modules ./node_modules
 
 # Expose the application port
 EXPOSE 8000
