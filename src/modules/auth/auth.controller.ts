@@ -27,8 +27,8 @@ export class AuthController {
 
       const cookieOptions = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax' as const,
+        secure: true, // MUST be true for sameSite: 'none'
+        sameSite: 'none' as const, // Required for cross-origin (api.gurugram... -> gurugram...)
       };
 
       // Set Access Token (15 minutes)
@@ -58,8 +58,8 @@ export class AuthController {
 
       const cookieOptions = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax' as const,
+        secure: true,
+        sameSite: 'none' as const,
       };
 
       // 2. Set the NEW cookies
