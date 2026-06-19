@@ -12,7 +12,7 @@ export class UserRepository {
   public static async insertUser(
     data: RegisterDto & { password: string; emailVerificationToken?: string },
   ) {
-    const [newUser] = await db
+    const result = await db
       .insert(users)
       .values({
         fullName: data.fullName,
@@ -20,9 +20,14 @@ export class UserRepository {
         password: data.password,
         emailVerificationToken: data.emailVerificationToken,
       })
-      .returning();
+      .returning({
+        id: users.id,
+        fullName: users.fullName,
+        email: users.email,
+        createdAt: users.createdAt,
+      });
 
-    return newUser;
+    return result[0] ?? null;
   }
 
   public static async updateUser(id: string, updateData: any) {
