@@ -14,25 +14,8 @@ import {
 import { relations } from "drizzle-orm";
 
 // ─── Module 1: Auth ──────────────────────────────────────────
-
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  email: varchar("email", { length: 255 }).unique(),
-  phone: varchar("phone", { length: 20 }).unique(),
-  passwordHash: varchar("password_hash", { length: 255 }),
-  name: varchar("name", { length: 255 }).notNull(),
-  avatarUrl: varchar("avatar_url", { length: 512 }),
-  emailVerifiedAt: timestamp("email_verified_at", { withTimezone: true }),
-  phoneVerifiedAt: timestamp("phone_verified_at", { withTimezone: true }),
-  provider: varchar("provider", { length: 20 }).notNull().default("email"),
-  role: varchar("role", { length: 20 }).notNull().default("user"),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+import { users } from "../../modules/auth/user.model.js";
+export { users };
 
 export const refreshTokens = pgTable(
   "refresh_tokens",
