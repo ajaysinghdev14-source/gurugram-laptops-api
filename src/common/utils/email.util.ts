@@ -73,7 +73,7 @@ export class EmailUtil {
     `);
 
     await transporter.sendMail({
-      from: `${COMPANY_NAME} <onboarding@resend.dev>`,
+      from: `${COMPANY_NAME} <no-reply@gurugramitnetworks.com>`,
       to,
       subject: `Verify your email — ${COMPANY_NAME}`,
       html,
@@ -108,7 +108,7 @@ export class EmailUtil {
     `);
 
     await transporter.sendMail({
-      from: `${COMPANY_NAME} <onboarding@resend.dev>`,
+      from: `${COMPANY_NAME} <no-reply@gurugramitnetworks.com>`,
       to,
       subject: `Reset your password — ${COMPANY_NAME}`,
       html,
@@ -171,7 +171,7 @@ export class EmailUtil {
       }] : undefined;
 
       await transporter.sendMail({
-        from: `${COMPANY_NAME} <onboarding@resend.dev>`,
+        from: `${COMPANY_NAME} <no-reply@gurugramitnetworks.com>`,
         to,
         subject: `Order Confirmed — #${shortOrderId} | ${COMPANY_NAME}`,
         html,
