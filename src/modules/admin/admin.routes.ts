@@ -12,5 +12,6 @@ router.use(requireAdmin);
 router.get('/users', AdminController.getAllUsers);
 router.patch('/users/:id/role', AdminController.updateUserRole);
 router.patch('/users/:id/status', AdminController.updateUserStatus);
+router.delete('/users/:id', AdminController.deleteUser);
 
 export const adminRoutes: Router = router;
