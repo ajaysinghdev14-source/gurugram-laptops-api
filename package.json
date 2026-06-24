@@ -2,7 +2,7 @@
   "name": "sortout-backend",
   "version": "1.0.0",
   "description": "SortOut Jobs backend - Node.js, Express, Drizzle, PostgreSQL",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
