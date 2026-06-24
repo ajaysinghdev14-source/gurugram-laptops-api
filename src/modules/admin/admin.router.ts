@@ -10,17 +10,6 @@ export const adminRouter = Router();
 adminRouter.use(requireAuth);
 adminRouter.use(asyncHandler(requireAdmin));
 
-// Admin stats must be before /:jobId style routes
-adminRouter.get("/jobs/stats", asyncHandler(adminController.getAdminStats));
-adminRouter.get("/jobs", asyncHandler(adminController.getAdminJobs));
-adminRouter.post("/jobs/:adminId", asyncHandler(adminController.createJob));
-adminRouter.put("/jobs/:jobId", asyncHandler(adminController.updateJob));
-adminRouter.delete("/jobs/:jobId", asyncHandler(adminController.deleteJob));
-adminRouter.patch(
-  "/jobs/:jobId/status",
-  asyncHandler(adminController.toggleJobStatus),
-);
-adminRouter.patch(
-  "/jobs/applications/:applicationId/status",
-  asyncHandler(adminController.updateApplicationStatus),
-);
+adminRouter.get("/users", asyncHandler(adminController.AdminController.getAllUsers));
+adminRouter.patch("/users/:id/role", asyncHandler(adminController.AdminController.updateUserRole));
+adminRouter.patch("/users/:id/status", asyncHandler(adminController.AdminController.updateUserStatus));

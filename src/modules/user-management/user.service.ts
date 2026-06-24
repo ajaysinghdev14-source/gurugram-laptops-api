@@ -11,9 +11,9 @@ function toUserResponse(row: {
   id: string;
   email: string | null;
   phone: string | null;
-  name: string;
+  name: string | null;
   avatarUrl: string | null;
-  role: string;
+  role: string | null;
   emailVerifiedAt: Date | null;
   phoneVerifiedAt: Date | null;
   createdAt: Date;
@@ -23,9 +23,9 @@ function toUserResponse(row: {
     id: row.id,
     email: row.email ?? null,
     phone: row.phone ?? null,
-    name: row.name,
+    name: row.name ?? "",
     avatarUrl: row.avatarUrl ? row.avatarUrl : null,
-    role: row.role,
+    role: row.role ?? "USER",
     emailVerifiedAt: row.emailVerifiedAt,
     phoneVerifiedAt: row.phoneVerifiedAt,
     createdAt: row.createdAt,
@@ -64,10 +64,10 @@ export async function getByEmail(email: string): Promise<{
   id: string;
   email: string | null;
   phone: string | null;
-  name: string;
+  name: string | null;
   passwordHash: string | null;
   avatarUrl: string | null;
-  role: string;
+  role: string | null;
   emailVerifiedAt: Date | null;
   phoneVerifiedAt: Date | null;
   createdAt: Date;
@@ -93,9 +93,9 @@ export async function getByPhone(phone: string): Promise<{
   id: string;
   email: string | null;
   phone: string | null;
-  name: string;
+  name: string | null;
   avatarUrl: string | null;
-  role: string;
+  role: string | null;
   emailVerifiedAt: Date | null;
   phoneVerifiedAt: Date | null;
   createdAt: Date;
@@ -156,7 +156,7 @@ export async function findOrCreatePhoneUser(phone: string): Promise<UserResponse
   const inserted = await db
     .insert(users)
     .values({
-      email: null,
+      email: `${normalized}@phone-login.local`,
       phone: normalized,
       passwordHash: null,
       name: "User",

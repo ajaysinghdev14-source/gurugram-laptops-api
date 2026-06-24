@@ -9,10 +9,6 @@ import { authLimiter } from "./modules/user-management/rate-limit.js";
 import { env } from "./config/env.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 import { authRouter } from "./modules/user-management/auth.router.js";
-import { masterRouter } from "./modules/master-data/master.router.js";
-import { onboardingRouter } from "./modules/onboarding/onboarding.router.js";
-import { profileRouter } from "./modules/profile/profile.router.js";
-import { jobsRouter } from "./modules/jobs/jobs.router.js";
 import { adminRouter } from "./modules/admin/admin.router.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -35,15 +31,7 @@ app.get("/health", (_req, res) => {
 // Module 1: Auth
 app.use("/api/auth", authLimiter, authRouter);
 
-// Module 2: Master Data (public) + Onboarding (auth)
-app.use("/api/master", masterRouter);
-app.use("/api/onboarding", onboardingRouter);
-
-// Module 3: Profile (auth)
-app.use("/api/profile", profileRouter);
-
-// Module 4: Jobs (public + auth) + Admin (admin only)
-app.use("/api/jobs", jobsRouter);
+// Module 4: Admin (admin only)
 app.use("/api/admin", adminRouter);
 
 app.use(errorHandler);

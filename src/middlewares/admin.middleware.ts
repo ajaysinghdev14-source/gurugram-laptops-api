@@ -20,7 +20,7 @@ export async function requireAdmin(
     .where(eq(users.id, req.user.userId))
     .limit(1);
 
-  if (!user || user.role.toLowerCase() !== "admin") {
+  if (!user || user.role?.toLowerCase() !== "admin") {
     next(new ApiError(403, "Admin access required"));
     return;
   }
