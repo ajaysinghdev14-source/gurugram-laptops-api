@@ -16,5 +16,14 @@ export const AdminController = {
     const { status } = req.body;
     const user = await UserRepository.updateUser(id, { status });
     res.status(200).json({ success: true, message: "User status updated", data: user });
+  },
+  deleteUser: async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params;
+    const deleted = await UserRepository.deleteUser(id);
+    if (!deleted) {
+      res.status(404).json({ success: false, message: "User not found" });
+      return;
+    }
+    res.status(200).json({ success: true, message: "User deleted", data: deleted });
   }
 };

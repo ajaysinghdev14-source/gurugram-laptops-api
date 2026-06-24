@@ -13,3 +13,4 @@ adminRouter.use(asyncHandler(requireAdmin));
 adminRouter.get("/users", asyncHandler(adminController.AdminController.getAllUsers));
 adminRouter.patch("/users/:id/role", asyncHandler(adminController.AdminController.updateUserRole));
 adminRouter.patch("/users/:id/status", asyncHandler(adminController.AdminController.updateUserStatus));
+adminRouter.delete("/users/:id", asyncHandler(adminController.AdminController.deleteUser));

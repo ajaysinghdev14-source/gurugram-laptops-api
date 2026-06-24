@@ -62,4 +62,9 @@ export class UserRepository {
       createdAt: users.createdAt,
     }).from(users);
   }
+
+  public static async deleteUser(id: string) {
+    const [deleted] = await db.delete(users).where(eq(users.id, id)).returning({ id: users.id });
+    return deleted ?? null;
+  }
 }
