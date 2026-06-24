@@ -104,6 +104,16 @@ export class AuthController {
     }
   };
 
+  public static resendVerificationEmail = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userId = res.locals.user.id;
+      await AuthService.resendVerificationEmail(userId);
+      return ApiResponse.success(res, 'Verification email sent successfully', null);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public static forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email } = req.body;

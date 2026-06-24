@@ -123,6 +123,26 @@ export class AuthService {
     return true;
   }
 
+  public static async resendVerificationEmail(userId: string) {
+    const user = await UserRepository.findUserById(userId);
+    if (!user) throw ApiError.notFound('User not found');
+
+    if (user.isEmailVerified) {
+      throw new ApiError(400, 'Email is already verified');
+    }
+
+    const emailVerificationToken = crypto.randomBytes(32).toString('hex');
+
+    await UserRepository.updateUser(user.id, {
+      emailVerificationToken,
+      updatedAt: new Date(),
+    });
+
+    await EmailUtil.sendVerificationEmail(user.email, emailVerificationToken);
+
+    return true;
+  }
+
   public static async forgotPassword(email: string) {
     const user = await UserRepository.findUserByEmail(email);
     if (!user) {

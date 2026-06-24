@@ -31,7 +31,8 @@ router.get('/me', requireAuth, async (req, res, next) => {
       fullName: user.fullName,
       email: user.email,
       role: user.role,
-      status: user.status
+      status: user.status,
+      isEmailVerified: user.isEmailVerified ?? false,
     });
   } catch (error) {
     next(error);
@@ -42,6 +43,7 @@ router.post('/refresh-token', AuthController.refreshToken);
 router.post('/logout', requireAuth, AuthController.logout);
 
 router.post('/verify-email', AuthController.verifyEmail);
+router.post('/resend-verify-email', requireAuth, AuthController.resendVerificationEmail);
 router.post('/forgot-password', AuthController.forgotPassword);
 router.post('/reset-password', AuthController.resetPassword);
 
